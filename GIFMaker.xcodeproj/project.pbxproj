@@ -13,6 +13,10 @@
 		4D6EF5FD2584C4560019C6CB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D6EF5FC2584C4560019C6CB /* Preview Assets.xcassets */; };
 		4D6EF6092584C4560019C6CB /* GIFMakerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6EF6082584C4560019C6CB /* GIFMakerTests.swift */; };
 		4D6EF6142584C4560019C6CB /* GIFMakerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6EF6132584C4560019C6CB /* GIFMakerUITests.swift */; };
+		4D6EF6252584C5500019C6CB /* ffmpeg in Resources */ = {isa = PBXBuildFile; fileRef = 4D6EF6242584C5500019C6CB /* ffmpeg */; };
+		4D6EF630258550F80019C6CB /* Terminal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6EF62F258550F80019C6CB /* Terminal.swift */; };
+		4D6EF635258567F60019C6CB /* FFMpeg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6EF634258567F60019C6CB /* FFMpeg.swift */; };
+		4DBA76202585A29900572FA8 /* DropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DBA761F2585A29900572FA8 /* DropView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +50,10 @@
 		4D6EF60F2584C4560019C6CB /* GIFMakerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GIFMakerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D6EF6132584C4560019C6CB /* GIFMakerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIFMakerUITests.swift; sourceTree = "<group>"; };
 		4D6EF6152584C4560019C6CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4D6EF6242584C5500019C6CB /* ffmpeg */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = ffmpeg; sourceTree = "<group>"; };
+		4D6EF62F258550F80019C6CB /* Terminal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Terminal.swift; sourceTree = "<group>"; };
+		4D6EF634258567F60019C6CB /* FFMpeg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFMpeg.swift; sourceTree = "<group>"; };
+		4DBA761F2585A29900572FA8 /* DropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,7 +105,9 @@
 			isa = PBXGroup;
 			children = (
 				4D6EF5F52584C4550019C6CB /* GIFMakerApp.swift */,
-				4D6EF5F72584C4550019C6CB /* ContentView.swift */,
+				4DBA761E2585A24F00572FA8 /* FFMpeg */,
+				4DBA761D2585A24A00572FA8 /* Views */,
+				4D6EF62F258550F80019C6CB /* Terminal.swift */,
 				4D6EF5F92584C4560019C6CB /* Assets.xcassets */,
 				4D6EF5FE2584C4560019C6CB /* Info.plist */,
 				4D6EF5FF2584C4560019C6CB /* GIFMaker.entitlements */,
@@ -130,6 +140,24 @@
 				4D6EF6152584C4560019C6CB /* Info.plist */,
 			);
 			path = GIFMakerUITests;
+			sourceTree = "<group>";
+		};
+		4DBA761D2585A24A00572FA8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4D6EF5F72584C4550019C6CB /* ContentView.swift */,
+				4DBA761F2585A29900572FA8 /* DropView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		4DBA761E2585A24F00572FA8 /* FFMpeg */ = {
+			isa = PBXGroup;
+			children = (
+				4D6EF6242584C5500019C6CB /* ffmpeg */,
+				4D6EF634258567F60019C6CB /* FFMpeg.swift */,
+			);
+			path = FFMpeg;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -236,6 +264,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D6EF5FD2584C4560019C6CB /* Preview Assets.xcassets in Resources */,
+				4D6EF6252584C5500019C6CB /* ffmpeg in Resources */,
 				4D6EF5FA2584C4560019C6CB /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -261,8 +290,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D6EF635258567F60019C6CB /* FFMpeg.swift in Sources */,
+				4D6EF630258550F80019C6CB /* Terminal.swift in Sources */,
 				4D6EF5F82584C4550019C6CB /* ContentView.swift in Sources */,
 				4D6EF5F62584C4550019C6CB /* GIFMakerApp.swift in Sources */,
+				4DBA76202585A29900572FA8 /* DropView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
