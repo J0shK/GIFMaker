@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D4204042586DDE000694E6D /* UserFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4204032586DDE000694E6D /* UserFileManager.swift */; };
+		4D4204092586F23100694E6D /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4204082586F23100694E6D /* GameScene.swift */; };
+		4D42040F2587E72800694E6D /* Confetti.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4D42040D2587E72800694E6D /* Confetti.sks */; };
+		4D4204102587E72800694E6D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D42040E2587E72800694E6D /* Assets.xcassets */; };
 		4D6EF5F62584C4550019C6CB /* GIFMakerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6EF5F52584C4550019C6CB /* GIFMakerApp.swift */; };
 		4D6EF5F82584C4550019C6CB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6EF5F72584C4550019C6CB /* ContentView.swift */; };
 		4D6EF5FA2584C4560019C6CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D6EF5F92584C4560019C6CB /* Assets.xcassets */; };
@@ -37,6 +41,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4D4204032586DDE000694E6D /* UserFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFileManager.swift; sourceTree = "<group>"; };
+		4D4204082586F23100694E6D /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		4D42040D2587E72800694E6D /* Confetti.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Confetti.sks; sourceTree = "<group>"; };
+		4D42040E2587E72800694E6D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4D6EF5F22584C4550019C6CB /* GIFMaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GIFMaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D6EF5F52584C4550019C6CB /* GIFMakerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIFMakerApp.swift; sourceTree = "<group>"; };
 		4D6EF5F72584C4550019C6CB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -105,6 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				4D6EF5F52584C4550019C6CB /* GIFMakerApp.swift */,
+				4D4204032586DDE000694E6D /* UserFileManager.swift */,
 				4DBA761E2585A24F00572FA8 /* FFMpeg */,
 				4DBA761D2585A24A00572FA8 /* Views */,
 				4D6EF62F258550F80019C6CB /* Terminal.swift */,
@@ -147,6 +156,9 @@
 			children = (
 				4D6EF5F72584C4550019C6CB /* ContentView.swift */,
 				4DBA761F2585A29900572FA8 /* DropView.swift */,
+				4D4204082586F23100694E6D /* GameScene.swift */,
+				4D42040D2587E72800694E6D /* Confetti.sks */,
+				4D42040E2587E72800694E6D /* Assets.xcassets */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -266,6 +278,8 @@
 				4D6EF5FD2584C4560019C6CB /* Preview Assets.xcassets in Resources */,
 				4D6EF6252584C5500019C6CB /* ffmpeg in Resources */,
 				4D6EF5FA2584C4560019C6CB /* Assets.xcassets in Resources */,
+				4D42040F2587E72800694E6D /* Confetti.sks in Resources */,
+				4D4204102587E72800694E6D /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,8 +306,10 @@
 			files = (
 				4D6EF635258567F60019C6CB /* FFMpeg.swift in Sources */,
 				4D6EF630258550F80019C6CB /* Terminal.swift in Sources */,
+				4D4204042586DDE000694E6D /* UserFileManager.swift in Sources */,
 				4D6EF5F82584C4550019C6CB /* ContentView.swift in Sources */,
 				4D6EF5F62584C4550019C6CB /* GIFMakerApp.swift in Sources */,
+				4D4204092586F23100694E6D /* GameScene.swift in Sources */,
 				4DBA76202585A29900572FA8 /* DropView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

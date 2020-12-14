@@ -27,13 +27,15 @@ struct Terminal {
 
     static func runAndWait(launchPath: String, arguments: [String]) -> AnyPublisher<Int32, Error> {
         return Future { observer in
-            let process = Terminal.run(launchPath: launchPath, arguments: arguments)
-            process.waitUntilExit()
-            let status = process.terminationStatus
-            if status == 0 {
-                observer(.success(status))
-            } else {
-                observer(.failure(.fail))
+            DispatchQueue.global(qos: .background).async {
+                let process = Terminal.run(launchPath: launchPath, arguments: arguments)
+                process.waitUntilExit()
+                let status = process.terminationStatus
+                if status == 0 {
+                    observer(.success(status))
+                } else {
+                    observer(.failure(.fail))
+                }
             }
         }.eraseToAnyPublisher()
     }

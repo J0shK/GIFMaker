@@ -6,59 +6,60 @@
 //
 
 import Combine
+import SpriteKit
 import SwiftUI
 
 struct DropView: View {
+    @ObservedObject var userFileManager: UserFileManager
     @State var active = false
+    let scene = GameScene()
+
+    init(userFileManager: UserFileManager) {
+        self.userFileManager = userFileManager
+        scene.size = CGSize(width: 250, height: 200)
+        scene.scaleMode = .aspectFit
+    }
+
     var body: some View {
         ZStack {
+            SpriteView(scene: scene)
             Rectangle()
                 .strokeBorder(active ? Color.blue : Color.white, style: StrokeStyle(lineWidth: 2, dash: [10], dashPhase: 0))
-            Text("Drop Here")
+            Text(userFileManager.processing ? "Processing..." : "Drop Here")
                 .font(.title)
                 .foregroundColor(active ? .blue : .white)
         }
         .onDrop(of: [.fileURL], delegate: self)
         .onTapGesture {
             print("Tapped")
-            let op = NSOpenPanel()
-            op.canChooseFiles = true
-            op.begin { response in
-                print(response)
-                switch(response) {
-                case .OK:
-                    print(op.url?.absoluteString ?? "no url")
-                    guard let url = op.url else { return }
-                    let ffmpeg = FFMpeg(inputPath: url.absoluteString)
-                    ffmpeg.begin()
-                default:
-                    print("Default behavior")
-                }
-            }
+//            userFileManager.openPanelForFile()
         }
     }
 }
 
 extension DropView: DropDelegate {
     func dropEntered(info: DropInfo) {
+        guard !userFileManager.processing else { return }
         active = true
+        scene.beginPopping()
     }
 
     func dropExited(info: DropInfo) {
+        guard !userFileManager.processing else { return }
         active = false
+        scene.stopPopping()
     }
 
     func performDrop(info: DropInfo) -> Bool {
-        let items = info.itemProviders(for: [.fileURL])
-        guard let firstItem = items.first else { return false}
-        firstItem.loadItem(forTypeIdentifier: "public.file-url", options: nil) { (item, error) in
-            guard let data = item as? Data else { return }
-            print(String(describing: data))
-            let url = NSURL(absoluteURLWithDataRepresentation: data, relativeTo: nil)
-            print("\(firstItem.suggestedName ?? "no filename") \(url.absoluteString ?? "NO URL")")
-            let ffmpeg = FFMpeg(inputPath: url.absoluteString ?? "")
-            ffmpeg.begin()
-        }
+        guard !userFileManager.processing else { return false }
+        userFileManager.handle(dropInfo: info)
         return true
+    }
+}
+
+
+struct DropView_Previews: PreviewProvider {
+    static var previews: some View {
+        DropView(userFileManager: UserFileManager())
     }
 }
