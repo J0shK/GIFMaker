@@ -12,8 +12,22 @@ class UserFileManager: ObservableObject {
     @Published var inputURL: URL?
     @Published var outputURL: URL?
 
-    @Published var inputString: String = ""
-    @Published var outputString: String = ""
+    var inputString: String {
+        get {
+            return inputURL?.absoluteString ?? ""
+        }
+        set {
+            inputURL = URL(string: newValue)
+        }
+    }
+    var outputString: String {
+        get {
+            return outputURL?.absoluteString ?? ""
+        }
+        set {
+            outputURL = URL(string: newValue)
+        }
+    }
 
     @Published var processing: Bool = false
 
@@ -28,7 +42,6 @@ class UserFileManager: ObservableObject {
                 guard let url = op.url else { return }
                 DispatchQueue.main.async {
                     self?.inputURL = url
-                    self?.inputString = url.absoluteString
                 }
             default:
                 print("Default behavior")
@@ -46,7 +59,6 @@ class UserFileManager: ObservableObject {
                 guard let url = op.url else { return }
                 DispatchQueue.main.async {
                     self?.outputURL = url
-                    self?.outputString = url.absoluteString
                 }
             default:
                 print("Default behavior")
@@ -63,7 +75,6 @@ class UserFileManager: ObservableObject {
                     guard let url = URL(dataRepresentation: data, relativeTo: nil, isAbsolute: true) else { return }
                     DispatchQueue.main.async {
                         self?.inputURL = url
-                        self?.inputString = url.absoluteString
                     }
                 }
             }
@@ -77,11 +88,18 @@ class UserFileManager: ObservableObject {
         ffmpeg
             .begin()
             .receive(on: RunLoop.main)
+            .handleEvents(receiveCancel: {
+                self.processing = false
+            })
             .sink { _ in
                 self.processing = false
             } receiveValue: { _ in
                 //
             }
             .store(in: &bag)
+    }
+
+    func cancel() {
+        bag.removeAll()
     }
 }

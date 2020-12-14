@@ -13,11 +13,22 @@ struct DropView: View {
     @ObservedObject var userFileManager: UserFileManager
     @State var active = false
     let scene = GameScene()
+    private var bag = Set<AnyCancellable>()
 
     init(userFileManager: UserFileManager) {
         self.userFileManager = userFileManager
         scene.size = CGSize(width: 250, height: 200)
         scene.scaleMode = .aspectFit
+        userFileManager
+            .$inputURL
+            .sink { [scene] url in
+                if url != nil {
+                    scene.beginPopping(size: .small)
+                } else {
+                    scene.stopPopping()
+                }
+            }
+            .store(in: &bag)
     }
 
     var body: some View {
@@ -41,7 +52,7 @@ extension DropView: DropDelegate {
     func dropEntered(info: DropInfo) {
         guard !userFileManager.processing else { return }
         active = true
-        scene.beginPopping()
+        scene.beginPopping(size: .large)
     }
 
     func dropExited(info: DropInfo) {

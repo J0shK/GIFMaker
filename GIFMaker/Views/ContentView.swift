@@ -22,7 +22,7 @@ struct ContentView: View {
             .$processing
             .sink { [dropView] processing in
                 if processing {
-                    dropView.scene.beginPopping()
+                    dropView.scene.beginPopping(size: .large)
                 } else {
                     dropView.scene.stopPopping()
                 }
@@ -42,8 +42,12 @@ struct ContentView: View {
                 .onTapGesture {
                     userFileManager.openPanelForFolder()
                 }
-            Button("Begin") {
-                userFileManager.begin()
+            Button(userFileManager.processing ? "Stop" : "Begin") {
+                if userFileManager.processing {
+                    userFileManager.cancel()
+                } else {
+                    userFileManager.begin()
+                }
             }.padding()
         }
     }

@@ -8,12 +8,21 @@
 import SpriteKit
 
 class GameScene: SKScene {
+
+    enum PopSize: Int {
+        case large = 1
+        case medium = 2
+        case small = 3
+    }
+
     enum Shapes: String, CaseIterable {
         case Oval
         case Triangle
         case Rectangle
     }
+
     private var popping = false
+    private var popSize: PopSize = .large
     private var emitter: SKEmitterNode?
     private var emitterBirthRate: CGFloat = 0
 
@@ -66,9 +75,10 @@ class GameScene: SKScene {
         addChild(box)
     }
 
-    func beginPopping() {
+    func beginPopping(size: PopSize) {
         popping = true
-        emitter?.particleBirthRate = emitterBirthRate
+        popSize = size
+        emitter?.particleBirthRate = emitterBirthRate / CGFloat(size.rawValue)
         for child in children {
             if child.name == "box" {
                 guard let body = child.physicsBody else { continue }
@@ -83,8 +93,8 @@ class GameScene: SKScene {
     }
 
     func pop(body: SKPhysicsBody) {
-        let value = 20
-        body.applyImpulse(CGVector(dx: Int.random(in: -value...value), dy: value))
+        let value: CGFloat = 20 / CGFloat(popSize.rawValue)
+        body.applyImpulse(CGVector(dx: CGFloat.random(in: -value...value), dy: value))
     }
 }
 
