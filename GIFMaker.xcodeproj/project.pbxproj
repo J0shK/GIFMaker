@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4D4204042586DDE000694E6D /* UserFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4204032586DDE000694E6D /* UserFileManager.swift */; };
+		4D4204042586DDE000694E6D /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4204032586DDE000694E6D /* SessionManager.swift */; };
 		4D4204092586F23100694E6D /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4204082586F23100694E6D /* GameScene.swift */; };
 		4D42040F2587E72800694E6D /* Confetti.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4D42040D2587E72800694E6D /* Confetti.sks */; };
 		4D4204102587E72800694E6D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D42040E2587E72800694E6D /* Assets.xcassets */; };
+		4D4204182588250B00694E6D /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4204172588250B00694E6D /* InputView.swift */; };
+		4D420420258852E000694E6D /* ConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D42041F258852E000694E6D /* ConfigView.swift */; };
 		4D6EF5F62584C4550019C6CB /* GIFMakerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6EF5F52584C4550019C6CB /* GIFMakerApp.swift */; };
 		4D6EF5F82584C4550019C6CB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6EF5F72584C4550019C6CB /* ContentView.swift */; };
 		4D6EF5FA2584C4560019C6CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D6EF5F92584C4560019C6CB /* Assets.xcassets */; };
@@ -20,6 +22,7 @@
 		4D6EF6252584C5500019C6CB /* ffmpeg in Resources */ = {isa = PBXBuildFile; fileRef = 4D6EF6242584C5500019C6CB /* ffmpeg */; };
 		4D6EF630258550F80019C6CB /* Terminal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6EF62F258550F80019C6CB /* Terminal.swift */; };
 		4D6EF635258567F60019C6CB /* FFMpeg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6EF634258567F60019C6CB /* FFMpeg.swift */; };
+		4DB8551B25896CED0011F898 /* SaveOpenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB8551A25896CED0011F898 /* SaveOpenManager.swift */; };
 		4DBA76202585A29900572FA8 /* DropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DBA761F2585A29900572FA8 /* DropView.swift */; };
 /* End PBXBuildFile section */
 
@@ -41,10 +44,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4D4204032586DDE000694E6D /* UserFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFileManager.swift; sourceTree = "<group>"; };
+		4D4204032586DDE000694E6D /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		4D4204082586F23100694E6D /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		4D42040D2587E72800694E6D /* Confetti.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Confetti.sks; sourceTree = "<group>"; };
 		4D42040E2587E72800694E6D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4D4204172588250B00694E6D /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
+		4D42041F258852E000694E6D /* ConfigView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigView.swift; sourceTree = "<group>"; };
 		4D6EF5F22584C4550019C6CB /* GIFMaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GIFMaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D6EF5F52584C4550019C6CB /* GIFMakerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIFMakerApp.swift; sourceTree = "<group>"; };
 		4D6EF5F72584C4550019C6CB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -61,6 +66,7 @@
 		4D6EF6242584C5500019C6CB /* ffmpeg */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = ffmpeg; sourceTree = "<group>"; };
 		4D6EF62F258550F80019C6CB /* Terminal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Terminal.swift; sourceTree = "<group>"; };
 		4D6EF634258567F60019C6CB /* FFMpeg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFMpeg.swift; sourceTree = "<group>"; };
+		4DB8551A25896CED0011F898 /* SaveOpenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveOpenManager.swift; sourceTree = "<group>"; };
 		4DBA761F2585A29900572FA8 /* DropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -89,6 +95,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4D4204242588753500694E6D /* SpriteKit */ = {
+			isa = PBXGroup;
+			children = (
+				4D4204082586F23100694E6D /* GameScene.swift */,
+				4D42040D2587E72800694E6D /* Confetti.sks */,
+				4D42040E2587E72800694E6D /* Assets.xcassets */,
+			);
+			path = SpriteKit;
+			sourceTree = "<group>";
+		};
+		4D4204252588758000694E6D /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				4D4204032586DDE000694E6D /* SessionManager.swift */,
+				4DB8551A25896CED0011F898 /* SaveOpenManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		4D4204262588758900694E6D /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		4D6EF5E92584C4550019C6CB = {
 			isa = PBXGroup;
 			children = (
@@ -113,7 +145,9 @@
 			isa = PBXGroup;
 			children = (
 				4D6EF5F52584C4550019C6CB /* GIFMakerApp.swift */,
-				4D4204032586DDE000694E6D /* UserFileManager.swift */,
+				4D4204262588758900694E6D /* ViewModels */,
+				4D4204252588758000694E6D /* Managers */,
+				4D4204242588753500694E6D /* SpriteKit */,
 				4DBA761E2585A24F00572FA8 /* FFMpeg */,
 				4DBA761D2585A24A00572FA8 /* Views */,
 				4D6EF62F258550F80019C6CB /* Terminal.swift */,
@@ -156,9 +190,8 @@
 			children = (
 				4D6EF5F72584C4550019C6CB /* ContentView.swift */,
 				4DBA761F2585A29900572FA8 /* DropView.swift */,
-				4D4204082586F23100694E6D /* GameScene.swift */,
-				4D42040D2587E72800694E6D /* Confetti.sks */,
-				4D42040E2587E72800694E6D /* Assets.xcassets */,
+				4D4204172588250B00694E6D /* InputView.swift */,
+				4D42041F258852E000694E6D /* ConfigView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -304,11 +337,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DB8551B25896CED0011F898 /* SaveOpenManager.swift in Sources */,
 				4D6EF635258567F60019C6CB /* FFMpeg.swift in Sources */,
 				4D6EF630258550F80019C6CB /* Terminal.swift in Sources */,
-				4D4204042586DDE000694E6D /* UserFileManager.swift in Sources */,
+				4D4204042586DDE000694E6D /* SessionManager.swift in Sources */,
+				4D420420258852E000694E6D /* ConfigView.swift in Sources */,
 				4D6EF5F82584C4550019C6CB /* ContentView.swift in Sources */,
 				4D6EF5F62584C4550019C6CB /* GIFMakerApp.swift in Sources */,
+				4D4204182588250B00694E6D /* InputView.swift in Sources */,
 				4D4204092586F23100694E6D /* GameScene.swift in Sources */,
 				4DBA76202585A29900572FA8 /* DropView.swift in Sources */,
 			);

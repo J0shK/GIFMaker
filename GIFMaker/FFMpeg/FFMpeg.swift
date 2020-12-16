@@ -55,8 +55,9 @@ class FFMpeg {
     }
 
     init(inputURL: URL, outputURL: URL? = nil, fps: Int = 30, scale: Int = 320) {
+        print("Starting with \(fps) \(scale)")
         self.inputURL = inputURL
-        self.outputURL = outputURL?.appendingPathComponent("test.gif") ?? FFMpeg.tempDirectoryURL(outputURL: outputURL).appendingPathComponent("test.gif")
+        self.outputURL = outputURL ?? FFMpeg.tempDirectoryURL(outputURL: outputURL).appendingPathComponent("Untitled.gif")
         self.paletteOutputURL = FFMpeg.tempDirectoryURL(outputURL: outputURL).appendingPathComponent("palette.png")
 
         self.fps = fps

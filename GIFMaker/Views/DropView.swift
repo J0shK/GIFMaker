@@ -10,25 +10,16 @@ import SpriteKit
 import SwiftUI
 
 struct DropView: View {
-    @ObservedObject var userFileManager: UserFileManager
-    @State var active = false
+    @State private var active = false
     let scene = GameScene()
-    private var bag = Set<AnyCancellable>()
+    private var processing: Bool
+    private var performDrop: ((DropInfo) -> Void)?
 
-    init(userFileManager: UserFileManager) {
-        self.userFileManager = userFileManager
+    init(processing: Bool, performDrop: ((DropInfo) -> Void)? = nil) {
+        self.processing = processing
+        self.performDrop = performDrop
         scene.size = CGSize(width: 250, height: 200)
         scene.scaleMode = .aspectFit
-        userFileManager
-            .$inputURL
-            .sink { [scene] url in
-                if url != nil {
-                    scene.beginPopping(size: .small)
-                } else {
-                    scene.stopPopping()
-                }
-            }
-            .store(in: &bag)
     }
 
     var body: some View {
@@ -36,34 +27,30 @@ struct DropView: View {
             SpriteView(scene: scene)
             Rectangle()
                 .strokeBorder(active ? Color.blue : Color.white, style: StrokeStyle(lineWidth: 2, dash: [10], dashPhase: 0))
-            Text(userFileManager.processing ? "Processing..." : "Drop Here")
+            Text(processing ? "Processing..." : "Drop Here")
                 .font(.title)
                 .foregroundColor(active ? .blue : .white)
         }
         .onDrop(of: [.fileURL], delegate: self)
-        .onTapGesture {
-            print("Tapped")
-//            userFileManager.openPanelForFile()
-        }
     }
 }
 
 extension DropView: DropDelegate {
     func dropEntered(info: DropInfo) {
-        guard !userFileManager.processing else { return }
+        guard !processing else { return }
         active = true
         scene.beginPopping(size: .large)
     }
 
     func dropExited(info: DropInfo) {
-        guard !userFileManager.processing else { return }
+        guard !processing else { return }
         active = false
         scene.stopPopping()
     }
 
     func performDrop(info: DropInfo) -> Bool {
-        guard !userFileManager.processing else { return false }
-        userFileManager.handle(dropInfo: info)
+        guard !processing else { return false }
+        performDrop?(info)
         return true
     }
 }
@@ -71,6 +58,6 @@ extension DropView: DropDelegate {
 
 struct DropView_Previews: PreviewProvider {
     static var previews: some View {
-        DropView(userFileManager: UserFileManager())
+        DropView(processing: false)
     }
 }
