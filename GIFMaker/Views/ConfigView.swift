@@ -12,26 +12,31 @@ struct ConfigView: View {
     @Binding var selectedFPS: FPS
 
     var body: some View {
-        HStack {
-            Picker("Dimensions", selection: $selectedSize) {
-                ForEach(GIFDimensions.allCases) { size in
-                    Text(size.rawValue).tag(size)
-                }
+        VStack {
+            HStack {
+                //
             }
-            .frame(width: 165)
-            Spacer()
-            Picker("FPS", selection: $selectedFPS) {
-                ForEach(FPS.allCases) { fps in
-                    Text("\(fps.value)").tag(fps)
+            HStack {
+                Picker("Dimensions", selection: $selectedSize) {
+                    ForEach(GIFDimensions.allCases) { size in
+                        Text(size.rawValue).tag(size)
+                    }
                 }
+                .frame(width: 165)
+                Spacer()
+                Picker("FPS", selection: $selectedFPS) {
+                    ForEach(FPS.allCases) { fps in
+                        Text("\(fps.value)").tag(fps)
+                    }
+                }
+                .frame(width: 100)
             }
-            .frame(width: 100)
         }
     }
 }
 
 struct ConfigView_Previews: PreviewProvider {
     static var previews: some View {
-        ConfigView(selectedSize: .constant(.small), selectedFPS: .constant(.low))
+        ConfigView(selectedSize: .constant(.small), selectedFPS: .constant(.low)).frame(width: 300)
     }
 }

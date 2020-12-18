@@ -12,6 +12,7 @@ struct GIFMakerApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(SessionManager())
         }
     }
 }

@@ -17,6 +17,7 @@ struct FileInfo {
 
 struct VideoInfo {
     let size: CGSize
+    let duration: Float64
 }
 
 struct SaveOpenManager {
@@ -35,6 +36,10 @@ struct SaveOpenManager {
                 }
             }
             .eraseToAnyPublisher()
+    }
+
+    static func openFolder(at url: URL) {
+        NSWorkspace.shared.activateFileViewerSelecting([url])
     }
 
     static func saveFile(suggestedName: String = "Untitled.gif") -> AnyPublisher<URL?, Never> {
@@ -68,10 +73,11 @@ struct SaveOpenManager {
 
     private static func getVideoDetails(from url: URL) -> VideoInfo? {
         let video = AVAsset(url: url)
+        let duration = CMTimeGetSeconds(video.duration)
         guard let track = video.tracks(withMediaType: .video).first else { return nil }
         let naturalSize = track.naturalSize.applying(track.preferredTransform)
         let size = CGSize(width: abs(naturalSize.width), height: abs(naturalSize.height))
-        return VideoInfo(size: size)
+        return VideoInfo(size: size, duration: duration)
     }
 }
 

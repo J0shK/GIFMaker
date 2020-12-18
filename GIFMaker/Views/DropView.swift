@@ -11,12 +11,13 @@ import SwiftUI
 
 struct DropView: View {
     @State private var active = false
-    let scene = GameScene()
-    private var processing: Bool
+    private let scene: GameScene
+    @Binding private var processing: Bool
     private var performDrop: ((DropInfo) -> Void)?
 
-    init(processing: Bool, performDrop: ((DropInfo) -> Void)? = nil) {
-        self.processing = processing
+    init(processing: Binding<Bool>, scene: GameScene, performDrop: ((DropInfo) -> Void)? = nil) {
+        _processing = processing
+        self.scene = scene
         self.performDrop = performDrop
         scene.size = CGSize(width: 250, height: 200)
         scene.scaleMode = .aspectFit
@@ -58,6 +59,6 @@ extension DropView: DropDelegate {
 
 struct DropView_Previews: PreviewProvider {
     static var previews: some View {
-        DropView(processing: false)
+        DropView(processing: .constant(false), scene: GameScene())
     }
 }

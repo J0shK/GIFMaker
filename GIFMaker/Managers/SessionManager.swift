@@ -57,8 +57,39 @@ class SessionManager: NSObject, ObservableObject {
     @Published var dimensions: GIFDimensions = .small
     @Published var fps: FPS = .high
     @Published var processing: Bool = false
-
+    @Published var advancedMode: Bool = false
+    var scene = GameScene()
     private var bag = Set<AnyCancellable>()
+
+    override init() {
+        super.init()
+        _processing
+            .projectedValue
+            .sink { [scene] processing in
+                if processing {
+                    scene.beginPopping(size: .large)
+                } else {
+                    scene.stopPopping()
+                }
+            }
+            .store(in: &bag)
+
+        _inputURL
+            .projectedValue
+            .sink { [weak self] url in
+                guard let self = self else { return }
+                if let url = url {
+                    if self.advancedMode {
+                        self.scene.beginPopping(size: .small)
+                    } else {
+                        self.begin(with: url)
+                    }
+                } else {
+                    self.scene.stopPopping()
+                }
+            }
+            .store(in: &bag)
+    }
 
     var inputString: String? {
         get {
@@ -108,8 +139,19 @@ class SessionManager: NSObject, ObservableObject {
             .store(in: &bag)
     }
 
-    func begin() {
-        guard let url = inputURL else { return }
+    func begin(with url: URL) {
+        guard let outputURL = outputURL else {
+            SaveOpenManager
+                .saveFile()
+                .receive(on: RunLoop.main)
+                .sink { [weak self] outputURL in
+                    guard let outputURL = outputURL else { return }
+                    self?.outputURL = outputURL
+                    self?.begin(with: url)
+                }
+                .store(in: &bag)
+            return
+        }
         processing = true
         let ffmpeg = FFMpeg(inputURL: url, outputURL: outputURL, fps: fps.value, scale: dimensions.value)
         ffmpeg
@@ -118,7 +160,13 @@ class SessionManager: NSObject, ObservableObject {
             .handleEvents(receiveCancel: {
                 self.processing = false
             })
-            .sink { _ in
+            .sink { completion in
+                switch(completion) {
+                case .failure(let error):
+                    print(error)
+                case .finished:
+                    break
+                }
                 self.processing = false
             } receiveValue: { _ in
                 //

@@ -23,6 +23,7 @@
 		4D6EF630258550F80019C6CB /* Terminal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6EF62F258550F80019C6CB /* Terminal.swift */; };
 		4D6EF635258567F60019C6CB /* FFMpeg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6EF634258567F60019C6CB /* FFMpeg.swift */; };
 		4DB8551B25896CED0011F898 /* SaveOpenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB8551A25896CED0011F898 /* SaveOpenManager.swift */; };
+		4DB855242589A76D0011F898 /* DisclosureButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB855232589A76D0011F898 /* DisclosureButton.swift */; };
 		4DBA76202585A29900572FA8 /* DropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DBA761F2585A29900572FA8 /* DropView.swift */; };
 /* End PBXBuildFile section */
 
@@ -67,6 +68,7 @@
 		4D6EF62F258550F80019C6CB /* Terminal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Terminal.swift; sourceTree = "<group>"; };
 		4D6EF634258567F60019C6CB /* FFMpeg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFMpeg.swift; sourceTree = "<group>"; };
 		4DB8551A25896CED0011F898 /* SaveOpenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveOpenManager.swift; sourceTree = "<group>"; };
+		4DB855232589A76D0011F898 /* DisclosureButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclosureButton.swift; sourceTree = "<group>"; };
 		4DBA761F2585A29900572FA8 /* DropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -114,13 +116,6 @@
 			path = Managers;
 			sourceTree = "<group>";
 		};
-		4D4204262588758900694E6D /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModels;
-			sourceTree = "<group>";
-		};
 		4D6EF5E92584C4550019C6CB = {
 			isa = PBXGroup;
 			children = (
@@ -145,10 +140,10 @@
 			isa = PBXGroup;
 			children = (
 				4D6EF5F52584C4550019C6CB /* GIFMakerApp.swift */,
-				4D4204262588758900694E6D /* ViewModels */,
 				4D4204252588758000694E6D /* Managers */,
 				4D4204242588753500694E6D /* SpriteKit */,
 				4DBA761E2585A24F00572FA8 /* FFMpeg */,
+				4DB855222589A7590011F898 /* Components */,
 				4DBA761D2585A24A00572FA8 /* Views */,
 				4D6EF62F258550F80019C6CB /* Terminal.swift */,
 				4D6EF5F92584C4560019C6CB /* Assets.xcassets */,
@@ -183,6 +178,14 @@
 				4D6EF6152584C4560019C6CB /* Info.plist */,
 			);
 			path = GIFMakerUITests;
+			sourceTree = "<group>";
+		};
+		4DB855222589A7590011F898 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				4DB855232589A76D0011F898 /* DisclosureButton.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		4DBA761D2585A24A00572FA8 /* Views */ = {
@@ -344,6 +347,7 @@
 				4D420420258852E000694E6D /* ConfigView.swift in Sources */,
 				4D6EF5F82584C4550019C6CB /* ContentView.swift in Sources */,
 				4D6EF5F62584C4550019C6CB /* GIFMakerApp.swift in Sources */,
+				4DB855242589A76D0011F898 /* DisclosureButton.swift in Sources */,
 				4D4204182588250B00694E6D /* InputView.swift in Sources */,
 				4D4204092586F23100694E6D /* GameScene.swift in Sources */,
 				4DBA76202585A29900572FA8 /* DropView.swift in Sources */,

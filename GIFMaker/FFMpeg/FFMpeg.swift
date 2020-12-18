@@ -48,17 +48,16 @@ class FFMpeg {
         ]
     }
 
-    private static func tempDirectoryURL(outputURL: URL?) -> URL {
+    private static var tempDirectoryURL: URL {
         let fm = FileManager.default
-//        return try! fm.url(for: .itemReplacementDirectory, in: .userDomainMask, appropriateFor: outputURL, create: true)
-        return fm.urls(for: .downloadsDirectory, in: .userDomainMask).first!
+        return fm.urls(for: .cachesDirectory, in: .userDomainMask).first!
     }
 
-    init(inputURL: URL, outputURL: URL? = nil, fps: Int = 30, scale: Int = 320) {
+    init(inputURL: URL, outputURL: URL, fps: Int = 30, scale: Int = 320) {
         print("Starting with \(fps) \(scale)")
         self.inputURL = inputURL
-        self.outputURL = outputURL ?? FFMpeg.tempDirectoryURL(outputURL: outputURL).appendingPathComponent("Untitled.gif")
-        self.paletteOutputURL = FFMpeg.tempDirectoryURL(outputURL: outputURL).appendingPathComponent("palette.png")
+        self.outputURL = outputURL
+        self.paletteOutputURL = FFMpeg.tempDirectoryURL.appendingPathComponent("palette.png")
 
         self.fps = fps
         self.scale = scale
@@ -81,7 +80,7 @@ class FFMpeg {
 
     func cleanup() {
         let fm = FileManager.default
-        let paletteUrl = FFMpeg.tempDirectoryURL(outputURL: outputURL).appendingPathComponent("palette.png")
+        let paletteUrl = FFMpeg.tempDirectoryURL.appendingPathComponent("palette.png")
         if fm.fileExists(atPath: paletteUrl.path) {
             do {
                 try fm.removeItem(atPath: paletteUrl.path)
