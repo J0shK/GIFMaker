@@ -9,41 +9,67 @@ import Combine
 import Cocoa
 import Foundation
 
-struct Terminal {
-    enum Error: Swift.Error {
-        case fail
-    }
+class Terminal {
+    private let process: Process
+    let subject = PassthroughSubject<String, Error>()
+    private var bag = Set<AnyCancellable>()
 
-    static func run(launchPath: String, arguments: [String]) -> Process {
-        let process = Process()
-        let pipe = Pipe()
-        process.standardOutput = pipe
+    init(launchPath: String, arguments: [String]) {
+        process = Process()
         process.arguments = arguments
         process.launchPath = launchPath
         process.standardInput = FileHandle.nullDevice
-        process.launch()
-        return process
+        attachPipe(to: process)
     }
 
-    static func runAndWait(launchPath: String, arguments: [String]) -> AnyPublisher<Int32, Error> {
-        return Future { observer in
-            DispatchQueue.global(qos: .background).async {
-                let process = Terminal.run(launchPath: launchPath, arguments: arguments)
-                process.waitUntilExit()
-                let status = process.terminationStatus
-                if status == 0 {
-                    observer(.success(status))
+    func begin() {
+        process.launch()
+    }
+
+    private func attachPipe(to process: Process) {
+        let pipe = Pipe()
+        process.standardOutput = pipe
+        let outHandle = pipe.fileHandleForReading
+        outHandle.waitForDataInBackgroundAndNotify()
+
+        NotificationCenter
+            .default
+            .publisher(for: .NSFileHandleDataAvailable, object: outHandle)
+            .sink { [weak self] completion in
+                switch completion {
+                case .failure(let error):
+                    self?.subject.send(completion: .failure(error))
+                case .finished:
+                    break
+                }
+            } receiveValue: { [weak self] notification in
+                let data = outHandle.availableData
+                if data.count > 0 {
+                    if let str = String(data: data, encoding: .utf8) {
+                        self?.subject.send(str)
+                    }
+                    outHandle.waitForDataInBackgroundAndNotify()
                 } else {
-                    observer(.failure(.fail))
+//                    print("EOF on stdout from process")
                 }
             }
-        }.eraseToAnyPublisher()
-    }
-}
+            .store(in: &bag)
 
-extension Process: Cancellable {
-    public func cancel() {
-        terminate()
+        NotificationCenter
+            .default
+            .publisher(for: Process.didTerminateNotification, object: process)
+            .sink { [weak self] completion in
+                switch completion {
+                case .failure(let error):
+                    self?.subject.send(completion: .failure(error))
+                case .finished:
+                    break
+                }
+            } receiveValue: { [weak self] notification in
+                self?.subject.send(completion: .finished)
+                self?.bag.removeAll()
+            }
+            .store(in: &bag)
     }
 }
 

@@ -22,6 +22,7 @@
 		4D6EF6252584C5500019C6CB /* ffmpeg in Resources */ = {isa = PBXBuildFile; fileRef = 4D6EF6242584C5500019C6CB /* ffmpeg */; };
 		4D6EF630258550F80019C6CB /* Terminal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6EF62F258550F80019C6CB /* Terminal.swift */; };
 		4D6EF635258567F60019C6CB /* FFMpeg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6EF634258567F60019C6CB /* FFMpeg.swift */; };
+		4DA5B380258D5115009C6C56 /* FFMpeg+Output.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA5B37F258D5115009C6C56 /* FFMpeg+Output.swift */; };
 		4DB8551B25896CED0011F898 /* SaveOpenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB8551A25896CED0011F898 /* SaveOpenManager.swift */; };
 		4DB855242589A76D0011F898 /* DisclosureButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB855232589A76D0011F898 /* DisclosureButton.swift */; };
 		4DBA76202585A29900572FA8 /* DropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DBA761F2585A29900572FA8 /* DropView.swift */; };
@@ -67,6 +68,7 @@
 		4D6EF6242584C5500019C6CB /* ffmpeg */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = ffmpeg; sourceTree = "<group>"; };
 		4D6EF62F258550F80019C6CB /* Terminal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Terminal.swift; sourceTree = "<group>"; };
 		4D6EF634258567F60019C6CB /* FFMpeg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFMpeg.swift; sourceTree = "<group>"; };
+		4DA5B37F258D5115009C6C56 /* FFMpeg+Output.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FFMpeg+Output.swift"; sourceTree = "<group>"; };
 		4DB8551A25896CED0011F898 /* SaveOpenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveOpenManager.swift; sourceTree = "<group>"; };
 		4DB855232589A76D0011F898 /* DisclosureButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclosureButton.swift; sourceTree = "<group>"; };
 		4DBA761F2585A29900572FA8 /* DropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropView.swift; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 			children = (
 				4D6EF6242584C5500019C6CB /* ffmpeg */,
 				4D6EF634258567F60019C6CB /* FFMpeg.swift */,
+				4DA5B37F258D5115009C6C56 /* FFMpeg+Output.swift */,
 			);
 			path = FFMpeg;
 			sourceTree = "<group>";
@@ -343,6 +346,7 @@
 				4DB8551B25896CED0011F898 /* SaveOpenManager.swift in Sources */,
 				4D6EF635258567F60019C6CB /* FFMpeg.swift in Sources */,
 				4D6EF630258550F80019C6CB /* Terminal.swift in Sources */,
+				4DA5B380258D5115009C6C56 /* FFMpeg+Output.swift in Sources */,
 				4D4204042586DDE000694E6D /* SessionManager.swift in Sources */,
 				4D420420258852E000694E6D /* ConfigView.swift in Sources */,
 				4D6EF5F82584C4550019C6CB /* ContentView.swift in Sources */,

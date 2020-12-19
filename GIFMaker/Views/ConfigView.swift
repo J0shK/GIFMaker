@@ -14,22 +14,17 @@ struct ConfigView: View {
     var body: some View {
         VStack {
             HStack {
-                //
-            }
-            HStack {
-                Picker("Dimensions", selection: $selectedSize) {
+                Picker("Size", selection: $selectedSize) {
                     ForEach(GIFDimensions.allCases) { size in
                         Text(size.rawValue).tag(size)
                     }
                 }
-                .frame(width: 165)
                 Spacer()
                 Picker("FPS", selection: $selectedFPS) {
                     ForEach(FPS.allCases) { fps in
                         Text("\(fps.value)").tag(fps)
                     }
-                }
-                .frame(width: 100)
+                }.frame(maxWidth: 90)
             }
         }
     }

@@ -10,24 +10,29 @@ import Combine
 
 struct ContentView: View {
     @EnvironmentObject var sessionManager: SessionManager
+    @Binding var advancedMode: Bool
     private var bag = Set<AnyCancellable>()
+
+    init(advancedMode: Binding<Bool>) {
+        _advancedMode = advancedMode
+    }
 
     var body: some View {
         VStack(spacing: 1) {
-            DropView(processing: $sessionManager.processing, scene: sessionManager.scene) { [sessionManager] info in
+            DropView(processing: $sessionManager.processing, progress: $sessionManager.progress, stage: $sessionManager.stage, scene: sessionManager.scene) { [sessionManager] info in
                 sessionManager.performDrop(info)
             }
             .frame(width: 250, height: 200)
-            .padding(EdgeInsets(top: 16, leading: 16, bottom: 8, trailing: 16))
-            DisclosureButton(title: "Advanced Options", isOpen: $sessionManager.advancedMode)
+            .padding([.top, .horizontal])
+            DisclosureButton(title: "Configure", isOpen: $advancedMode)
                 .padding()
-            if sessionManager.advancedMode {
-                InputView(inputString: sessionManager.inputString, outputString: sessionManager.outputString) {
+            if advancedMode {
+                InputView(inputString: sessionManager.inputPath, outputString: sessionManager.outputString) {
                     sessionManager.openFile()
                 } saveFile: {
                     sessionManager.saveFile()
                 } clearInput: {
-                    sessionManager.inputURL = nil
+                    sessionManager.inputFile = nil
                 } clearOutput: {
                     sessionManager.outputURL = nil
                 }
@@ -40,25 +45,24 @@ struct ContentView: View {
                     if sessionManager.processing {
                         sessionManager.cancel()
                     } else {
-                        guard let url = sessionManager.inputURL else { return }
+                        guard let url = sessionManager.inputFile?.url else { return }
                         sessionManager.begin(with: url)
                     }
                 }
-                .disabled(sessionManager.inputURL == nil)
+                .disabled(sessionManager.inputFile == nil)
                 .padding()
             }
-            Button("View") {
-                guard let url = sessionManager.outputURL else { return }
-                SaveOpenManager.openFolder(at: url)
-            }
-        }
+//            Button("View") {
+//                guard let url = sessionManager.outputURL else { return }
+//                SaveOpenManager.openFolder(at: url)
+//            }
+        }.fixedSize()
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(advancedMode: .constant(true))
             .environmentObject(SessionManager())
-            .frame(maxWidth: 300)
     }
 }

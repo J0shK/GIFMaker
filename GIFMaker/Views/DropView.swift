@@ -13,10 +13,14 @@ struct DropView: View {
     @State private var active = false
     private let scene: GameScene
     @Binding private var processing: Bool
+    @Binding private var progress: CGFloat
+    @Binding private var stage: FFMpeg.Output.Stage
     private var performDrop: ((DropInfo) -> Void)?
 
-    init(processing: Binding<Bool>, scene: GameScene, performDrop: ((DropInfo) -> Void)? = nil) {
+    init(processing: Binding<Bool>, progress: Binding<CGFloat>, stage: Binding<FFMpeg.Output.Stage>, scene: GameScene, performDrop: ((DropInfo) -> Void)? = nil) {
         _processing = processing
+        _progress = progress
+        _stage = stage
         self.scene = scene
         self.performDrop = performDrop
         scene.size = CGSize(width: 250, height: 200)
@@ -28,9 +32,16 @@ struct DropView: View {
             SpriteView(scene: scene)
             Rectangle()
                 .strokeBorder(active ? Color.blue : Color.white, style: StrokeStyle(lineWidth: 2, dash: [10], dashPhase: 0))
-            Text(processing ? "Processing..." : "Drop Here")
-                .font(.title)
-                .foregroundColor(active ? .blue : .white)
+            VStack {
+                Text(processing ? (stage == .processing ? "Converting..." : "Pre-Processing...") : "Drop Here")
+                    .font(.title)
+                    .foregroundColor(active ? .blue : .white)
+                if processing {
+                    Text("\(Int(progress * 100))%")
+                        .font(.title3)
+                        .foregroundColor(active ? .blue : .white)
+                }
+            }
         }
         .onDrop(of: [.fileURL], delegate: self)
     }
@@ -59,6 +70,7 @@ extension DropView: DropDelegate {
 
 struct DropView_Previews: PreviewProvider {
     static var previews: some View {
-        DropView(processing: .constant(false), scene: GameScene())
+        DropView(processing: .constant(false), progress: .constant(1), stage: .constant(.none), scene: GameScene())
+            .frame(width: 250, height: 200)
     }
 }

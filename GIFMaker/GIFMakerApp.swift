@@ -9,10 +9,11 @@ import SwiftUI
 
 @main
 struct GIFMakerApp: App {
+    @ObservedObject var manager = SessionManager()
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environmentObject(SessionManager())
+            ContentView(advancedMode: $manager.advancedMode)
+                .environmentObject(manager)
         }
     }
 }

@@ -17,7 +17,7 @@ struct FileInfo {
 
 struct VideoInfo {
     let size: CGSize
-    let duration: Float64
+    let duration: CMTime
 }
 
 struct SaveOpenManager {
@@ -73,11 +73,10 @@ struct SaveOpenManager {
 
     private static func getVideoDetails(from url: URL) -> VideoInfo? {
         let video = AVAsset(url: url)
-        let duration = CMTimeGetSeconds(video.duration)
         guard let track = video.tracks(withMediaType: .video).first else { return nil }
         let naturalSize = track.naturalSize.applying(track.preferredTransform)
         let size = CGSize(width: abs(naturalSize.width), height: abs(naturalSize.height))
-        return VideoInfo(size: size, duration: duration)
+        return VideoInfo(size: size, duration: video.duration)
     }
 }
 

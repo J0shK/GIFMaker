@@ -52,13 +52,16 @@ enum FPS: Identifiable, CaseIterable {
 }
 
 class SessionManager: NSObject, ObservableObject {
-    @Published var inputURL: URL?
+    @Published var inputFile: FileInfo?
     @Published var outputURL: URL?
     @Published var dimensions: GIFDimensions = .small
     @Published var fps: FPS = .high
     @Published var processing: Bool = false
+    @Published var stage: FFMpeg.Output.Stage = .none
+    @Published var progress: CGFloat = 0
     @Published var advancedMode: Bool = false
     var scene = GameScene()
+    private var ffmpeg: FFMpeg?
     private var bag = Set<AnyCancellable>()
 
     override init() {
@@ -74,11 +77,11 @@ class SessionManager: NSObject, ObservableObject {
             }
             .store(in: &bag)
 
-        _inputURL
+        _inputFile
             .projectedValue
-            .sink { [weak self] url in
+            .sink { [weak self] fileInfo in
                 guard let self = self else { return }
-                if let url = url {
+                if let url = fileInfo?.url {
                     if self.advancedMode {
                         self.scene.beginPopping(size: .small)
                     } else {
@@ -91,12 +94,9 @@ class SessionManager: NSObject, ObservableObject {
             .store(in: &bag)
     }
 
-    var inputString: String? {
+    var inputPath: String? {
         get {
-            return inputURL?.path
-        }
-        set {
-            inputURL = URL(string: newValue ?? "")
+            return inputFile?.url.path
         }
     }
 
@@ -114,7 +114,7 @@ class SessionManager: NSObject, ObservableObject {
             .handle(dropInfo: info)
             .receive(on: RunLoop.main)
             .sink { [weak self] fileInfo in
-                self?.inputURL = fileInfo?.url
+                self?.inputFile = fileInfo
             }
             .store(in: &bag)
     }
@@ -124,7 +124,7 @@ class SessionManager: NSObject, ObservableObject {
             .openFile()
             .receive(on: RunLoop.main)
             .sink { [weak self] fileInfo in
-                self?.inputURL = fileInfo?.url
+                self?.inputFile = fileInfo
             }
             .store(in: &bag)
     }
@@ -153,25 +153,45 @@ class SessionManager: NSObject, ObservableObject {
             return
         }
         processing = true
-        let ffmpeg = FFMpeg(inputURL: url, outputURL: outputURL, fps: fps.value, scale: dimensions.value)
-        ffmpeg
-            .begin()
+
+        ffmpeg = FFMpeg(
+            inputURL: url,
+            outputURL: outputURL,
+            fps: fps.value,
+            scale: dimensions.value
+        )
+
+        ffmpeg?
+            .subject
             .receive(on: RunLoop.main)
             .handleEvents(receiveCancel: {
                 self.processing = false
+                self.progress = 0
+                self.stage = .none
             })
             .sink { completion in
                 switch(completion) {
                 case .failure(let error):
                     print(error)
                 case .finished:
+                    print("Session: Receive finished")
                     break
                 }
                 self.processing = false
-            } receiveValue: { _ in
-                //
+                self.progress = 0
+                self.stage = .none
+            } receiveValue: { output in
+                self.stage = output?.stage ?? .none
+                guard let videoInfo = self.inputFile?.videoInfo else { return }
+                let duration = CMTimeGetSeconds(videoInfo.duration)
+                let outTimeMs = Double(output?.outTimeMs ?? "0") ?? 0
+                let outTimeSeconds = outTimeMs / 1000000
+                let progressPerc = outTimeSeconds / duration
+                self.progress = CGFloat(progressPerc)
             }
             .store(in: &bag)
+
+        ffmpeg?.begin()
     }
 
     func cancel() {
