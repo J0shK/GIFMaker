@@ -97,13 +97,22 @@ class SessionManager: NSObject, ObservableObject {
 
     var inputPath: String? {
         get {
-            return inputFile?.url.path
+            return inputFile?
+                .url
+                .path
+                .components(separatedBy: "/")
+                .suffix(2)
+                .joined(separator: "/")
         }
     }
 
     var outputString: String? {
         get {
-            return outputURL?.path
+            return outputURL?
+                .path
+                .components(separatedBy: "/")
+                .suffix(2)
+                .joined(separator: "/")
         }
         set {
             outputURL = URL(string: newValue ?? "")
