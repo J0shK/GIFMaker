@@ -140,23 +140,18 @@ class SessionManager: NSObject, ObservableObject {
     }
 
     func begin(with url: URL) {
-        guard let outputURL = outputURL else {
-            SaveOpenManager
-                .saveFile()
-                .receive(on: RunLoop.main)
-                .sink { [weak self] outputURL in
-                    guard let outputURL = outputURL else { return }
-                    self?.outputURL = outputURL
-                    self?.begin(with: url)
-                }
-                .store(in: &bag)
-            return
+        var finalOutputURL: URL
+        if let outputURL = outputURL {
+            finalOutputURL = outputURL
+        } else {
+            finalOutputURL = url.deletingPathExtension().appendingPathExtension("gif")
+            outputURL = finalOutputURL
         }
         processing = true
 
         ffmpeg = FFMpeg(
             inputURL: url,
-            outputURL: outputURL,
+            outputURL: finalOutputURL,
             fps: fps.value,
             scale: dimensions.value
         )
