@@ -24,8 +24,19 @@ class FFMpeg {
     private let flags = "lanczos,palettegen"
     private let flags2 = "lanczos[x];[x][1:v]paletteuse"
 
-    let subject = PassthroughSubject<Output?, Error>()
+    private let subject = PassthroughSubject<Output?, Error>()
     private var bag = Set<AnyCancellable>()
+
+    var publisher: AnyPublisher<Output?, Error> {
+        return subject
+            .handleEvents(receiveSubscription: { _ in
+                self.begin()
+            }, receiveCancel: {
+                self.bag.removeAll()
+                self.cleanup()
+            })
+            .eraseToAnyPublisher()
+    }
 
     private var pass1Filters: String {
         return "fps=\(fps),scale=\(scale):-1:flags=\(flags)"
@@ -62,7 +73,6 @@ class FFMpeg {
     }
 
     init(inputURL: URL, outputURL: URL, fps: Int = 30, scale: Int = 320) {
-        print("Starting with \(fps) \(scale)")
         self.inputURL = inputURL
         self.outputURL = outputURL
         self.paletteOutputURL = FFMpeg.tempDirectoryURL.appendingPathComponent("palette.png")
@@ -72,18 +82,24 @@ class FFMpeg {
     }
 
     func begin() {
-        pass1 = Terminal(launchPath: launchPath, arguments: pass1Arguments)
-        pass2 = Terminal(launchPath: launchPath, arguments: pass2Arguments)
+        pass1 = Terminal(
+            launchPath: launchPath,
+            arguments: pass1Arguments
+        )
+        pass2 = Terminal(
+            launchPath: launchPath,
+            arguments: pass2Arguments
+        )
 
         pass1?
-            .subject
+            .publisher
             .sink { completion in
                 switch completion {
                 case .failure(let error):
                     self.subject.send(completion: .failure(error))
                 case .finished:
                     self.pass2?
-                        .subject
+                        .publisher
                         .sink { completion in
                             switch completion {
                             case .failure(let error):
@@ -93,20 +109,17 @@ class FFMpeg {
                                 self.subject.send(completion: .finished)
                             }
                         } receiveValue: { value in
-                            self.subject.send(self.convert(value, stage: .processing))
+                            self.subject.send(self.parse(value, stage: .processing))
                         }
                         .store(in: &self.bag)
-                    self.pass2?.begin()
                 }
             } receiveValue: { value in
-                self.subject.send(self.convert(value, stage: .preprocessing))
+                self.subject.send(self.parse(value, stage: .preprocessing))
             }
             .store(in: &self.bag)
-
-        pass1?.begin()
     }
 
-    private func convert(_ value: String, stage: Output.Stage) -> Output? {
+    private func parse(_ value: String, stage: Output.Stage) -> Output? {
         var dict = [String: String]()
         let lines = value.components(separatedBy: "\n")
         for line in lines {
@@ -122,7 +135,7 @@ class FFMpeg {
             let progressObj = try JSONDecoder().decode(Output.self, from: data)
             return progressObj
         } catch {
-            print("ERROR: \(error)")
+            print("Data parse error: \(error)")
             return nil
         }
     }

@@ -63,6 +63,7 @@ class SessionManager: NSObject, ObservableObject {
     var scene = GameScene()
     private var ffmpeg: FFMpeg?
     private var bag = Set<AnyCancellable>()
+    private var ffmpegBag = Set<AnyCancellable>()
 
     override init() {
         super.init()
@@ -157,7 +158,7 @@ class SessionManager: NSObject, ObservableObject {
         )
 
         ffmpeg?
-            .subject
+            .publisher
             .receive(on: RunLoop.main)
             .handleEvents(receiveCancel: {
                 self.processing = false
@@ -184,12 +185,10 @@ class SessionManager: NSObject, ObservableObject {
                 let progressPerc = outTimeSeconds / duration
                 self.progress = CGFloat(progressPerc)
             }
-            .store(in: &bag)
-
-        ffmpeg?.begin()
+            .store(in: &ffmpegBag)
     }
 
     func cancel() {
-        bag.removeAll()
+        ffmpegBag.removeAll()
     }
 }

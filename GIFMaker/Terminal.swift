@@ -11,8 +11,21 @@ import Foundation
 
 class Terminal {
     private let process: Process
-    let subject = PassthroughSubject<String, Error>()
+    private let subject = PassthroughSubject<String, Error>()
     private var bag = Set<AnyCancellable>()
+
+    var publisher: AnyPublisher<String, Error> {
+        return subject
+            .handleEvents(receiveSubscription: { _ in
+                self.process.launch()
+            }, receiveCompletion: { [weak self] _ in
+                self?.bag.removeAll()
+            }, receiveCancel: {
+                self.process.terminate()
+                self.bag.removeAll()
+            })
+            .eraseToAnyPublisher()
+    }
 
     init(launchPath: String, arguments: [String]) {
         process = Process()
@@ -20,10 +33,6 @@ class Terminal {
         process.launchPath = launchPath
         process.standardInput = FileHandle.nullDevice
         attachPipe(to: process)
-    }
-
-    func begin() {
-        process.launch()
     }
 
     private func attachPipe(to process: Process) {
@@ -49,8 +58,6 @@ class Terminal {
                         self?.subject.send(str)
                     }
                     outHandle.waitForDataInBackgroundAndNotify()
-                } else {
-//                    print("EOF on stdout from process")
                 }
             }
             .store(in: &bag)
@@ -67,7 +74,6 @@ class Terminal {
                 }
             } receiveValue: { [weak self] notification in
                 self?.subject.send(completion: .finished)
-                self?.bag.removeAll()
             }
             .store(in: &bag)
     }
