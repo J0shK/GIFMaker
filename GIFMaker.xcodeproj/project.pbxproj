@@ -26,6 +26,7 @@
 		4DB8551B25896CED0011F898 /* SaveOpenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB8551A25896CED0011F898 /* SaveOpenManager.swift */; };
 		4DB855242589A76D0011F898 /* DisclosureButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB855232589A76D0011F898 /* DisclosureButton.swift */; };
 		4DBA76202585A29900572FA8 /* DropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DBA761F2585A29900572FA8 /* DropView.swift */; };
+		4DE59278258FF49800838A7A /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4DE59277258FF49800838A7A /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,7 @@
 		4DB8551A25896CED0011F898 /* SaveOpenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveOpenManager.swift; sourceTree = "<group>"; };
 		4DB855232589A76D0011F898 /* DisclosureButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclosureButton.swift; sourceTree = "<group>"; };
 		4DBA761F2585A29900572FA8 /* DropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropView.swift; sourceTree = "<group>"; };
+		4DE59277258FF49800838A7A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +123,7 @@
 		4D6EF5E92584C4550019C6CB = {
 			isa = PBXGroup;
 			children = (
+				4DE59277258FF49800838A7A /* README.md */,
 				4D6EF5F42584C4550019C6CB /* GIFMaker */,
 				4D6EF6072584C4560019C6CB /* GIFMakerTests */,
 				4D6EF6122584C4560019C6CB /* GIFMakerUITests */,
@@ -314,6 +317,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DE59278258FF49800838A7A /* README.md in Resources */,
 				4D6EF5FD2584C4560019C6CB /* Preview Assets.xcassets in Resources */,
 				4D6EF6252584C5500019C6CB /* ffmpeg in Resources */,
 				4D6EF5FA2584C4560019C6CB /* Assets.xcassets in Resources */,
