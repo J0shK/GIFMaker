@@ -97,26 +97,26 @@ class SessionManager: NSObject, ObservableObject {
 
     var inputPath: String? {
         get {
-            return inputFile?
-                .url
-                .path
-                .components(separatedBy: "/")
-                .suffix(2)
-                .joined(separator: "/")
+            return readableURLString(from: inputFile?.url)
         }
     }
 
     var outputString: String? {
         get {
-            return outputURL?
-                .path
-                .components(separatedBy: "/")
-                .suffix(2)
-                .joined(separator: "/")
+            return readableURLString(from: outputURL)
         }
         set {
             outputURL = URL(string: newValue ?? "")
         }
+    }
+
+    private func readableURLString(from url: URL?) -> String? {
+        guard let url = url else { return nil }
+        if url.path.count > 23 {
+            let substring = url.path.suffix(23)
+            return "...\(substring)"
+        }
+        return url.path
     }
 
     func performDrop(_ info: DropInfo) {
